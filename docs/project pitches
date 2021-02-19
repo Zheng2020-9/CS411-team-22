@@ -1,1 +1,14 @@
+Pitch 1: COVID-19 Dashboard
+We plan on aggregating data from COVID-19 statistics to develop a real-time dashboard-style application that displays geographical trends relating to the virus. For example, the U.S. Bureau of Labor Statistics offers an API that gives public access to unemployment rates across the country. Another feature could be displaying areas with high activity of vaccination based on the location and content of COVID-related tweets. The general idea is to link COVID-19 with data or trends that are not easily accessed or discernible elsewhere. 
 
+Resources: 
+https://www.bls.gov/developers/
+https://github.com/CSSEGISandData/COVID-19/blob/master/README.md
+
+------
+
+Pitch 2: Social Media & Gift Recommendation
+Our second idea is an application that uses a person's social media feed (Twitter, Instagram, etc.) to recommend gifts for the individual in question. The app could take into account factors like general trends, pages someone likes, etc. to recommend products that person would enjoy. The app would then also query shopping websites for these types of products and display results to the user. 
+
+Resources:
+TBD
