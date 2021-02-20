@@ -11,4 +11,4 @@ Pitch 2: Social Media & Gift Recommendation
 Our second idea is an application that uses a person's social media feed (Twitter, Instagram, etc.) to recommend gifts for the individual in question. The app could take into account factors like general trends, pages someone likes, etc. to recommend products that person would enjoy. The app would then also query shopping websites for these types of products and display results to the user. 
 
 Resources:https://www.programmableweb.com/api/twitter
-TBD
+https://www.programmableweb.com/api/amazon-gateway
