@@ -1,1 +1,29 @@
+Use Case 3: User enters a county in a different state and receives a notification
+
+Actor: User
+
+Use Case Overview: The system shows the user information on current public health ordinances and COVID stats for his or her home county, and provides a link that directs to the county website for further information. 
+
+Alt Flows:
+User has notifications disabled 
+User has location services disabled
+User doesn’t have notifications disabled, but wants to disable them
+The user wants to disable notifications for specific locations.
+
+Trigger: GPS location/ip location/change in user zip code setting (whichever is most convenient)
+
+Subject Area: Domestics/County.
+
+Alt Flow 1: Notifications Disabled
+Description: The user will be brought to the current location dashboard upon opening the app.
+
+
+Alt Flow 2: Location Services Disabled
+Description:   If applicable, rely on ip address location, otherwise, return to home dashboard until the user requests otherwise.
+
+Alt Flow 3: Disable Notifications
+Description:  The user can enable/disable notifications in the same settings section that includes changing the home location.
+
+Alt Flow 4: Disable Notifications for Specific Locations
+Description: Locations that have been bookmarked do not trigger the notification system.
 
