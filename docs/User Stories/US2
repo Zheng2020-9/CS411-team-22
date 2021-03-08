@@ -1,1 +1,44 @@
+Use Case 2: Navigating the National Map and Other Counties Using Bookmarks
+Actor: User
+
+Use Case Overview: The system checks if the user has already registered in the application. The user enters some county information, and the system will verify if the county information exists and is valid. Then, the system checks if the location entered has already been bookmarked. After completing these steps, the user will get information about Case and Death counts, Vaccine Distribution, and Vulnerability index from the selected county according to the CDC data and see a visual representation on the map provided.
+
+Trigger: A user enters the location information to look at COVID-related information for states and counties other than their home county. 
+
+Subject Area: Domestics/County.
+
+Precondition: The user has already registered.
+
+Alt Flows:
+User has the location already bookmarked.
+User wants to bookmark the location for easier access in the future.
+User enters in wrong or missing county information.
+User wants to navigate the map based on the vulnerability index.
+
+Alt Flow 1: Existing Bookmark
+Description: This scenario describes the situation when checking the bookmarks, listing the bookmarks, and redirecting to the map are needed for the user.
+The user enters a location information.
+The system verifies that the location information has already been recorded in the Bookmarks.
+The system lists all the bookmarks.
+The user selects the location bookmark.
+The user will be directed to the existing page.
+
+Alt Flow 2: Add a Bookmark
+Description: This scenario describes the situation when bookmarking the location is required for the user.
+The user enters the correct location information.
+The user saves the location into the bookmark system.
+The system creates a bookmark and saves the information in it.
+The system displays a visual representation of the added bookmark.
+
+Alt Flow 3: Wrong Information Entered
+Description: This scenario describes the situation when checking the information and printing an error message are required for the user.
+The user enters a location information.
+The system verifies that the information does not exist.
+An error message prints out and the system quits.
+
+Alt Flow 4: Navigate the Map 
+Description: This scenario describes the situation where only showing the map is required for the user.
+The User has already entered the location information and has been redirected from the bookmark page.
+The system lists all the Covid-19 information from the CDC including Case and Death counts, Vaccine Distribution, and Vulnerability index.
+The user will be able to see this information on a map and interact with this information on the map such as clicking one element and see the severity of the element on the map.
 
