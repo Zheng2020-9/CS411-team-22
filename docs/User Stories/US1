@@ -1,1 +1,34 @@
+Use Case 1: Logging in and Accessing Home County Information
+
+Actor: User
+
+Use Case Overview: The user of the application wants to see COVID stats for their home county. The user logs in if they have an account, or are prompted to make an account if they do not have one. The user can then view their home county information, or select a home county if they do not already have one.
+
+Trigger: Logging in will land you on the home county dashboard, or current location otherwise.
+
+Precondition: The user can access the application.
+
+Alt Flows:
+User wants to create an account for using the application.
+User enters in the zip code of their home county.
+User wants to change the home country associated with his or her account. 
+
+Basic Flow
+Description: This scenario describes the case when a returning user already has an account and a home county set up in the application from a previous session. After logging in with the third-party authentication, the user arrives at a dashboard showing COVID stats for their home county. The user can see stats such as new case/death count trends, a list of generalized public health ordinances from the interventions database, and a link to the county website for further information.
+
+Alt Flow 1: New Account
+Description: This scenario describes the situation when a new user does not have an account set up from a previous session. 
+The user is prompted to login with third party authentication, i.e. with a gmail account.
+When the login is verified, the user lands on the homepage where they are prompted to select a home county (see Alt Flow 2).
+
+Alt Flow 2: Setting Home County
+Description: This scenario describes the situation when a user has successfully logged in to the application, but does not have a home county established on the app. 
+On the homepage, the user is presented with a form field asking for their ZIP code.
+The user enters their ZIP code into the field.
+After verifying the entered ZIP code is correct, the homepage now displays statistics for their designated home county. 
+
+Alt Flow 3: Changing Home County
+Description: This scenario describes the case when a user already has an account and home county set up, but wants to change the home county associated with their account. 
+On the homepage, the user presses a “Change Home County” button. 
+The user then chooses their new home county (see Alt Flow 2).
 
