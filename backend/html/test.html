@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        
+    </head>
+    <body>
+        <script>
+            function Doalaert(){
+                window.location.href = "https://www.baidu.com";
+            }
+        </script>
+        <div class="search">
+            <form action="http://localhost:8000/handle" method = "POST">
+                {% csrf_token %}
+                <input name = "sts" type="text" value="" id="thisid">
+                <input type="submit" value = "search">
+                
+                <button onclick="Doalaert()">test button</button>
+            </form> 
+            
+        </div>
+        <h1>search test</h1>
+
+    </body>
+</html>
