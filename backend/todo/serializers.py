@@ -5,9 +5,9 @@ from .models import State
 class CountySerializer(serializers.ModelSerializer):
     class Meta:
         model = County
-        fields = ('id', 'name', 'fips', 'cases', 'deaths')
+        fields = ('county_name', 'state', 'cases', 'deaths')
         
 class StateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = County
-        fields = ('id', 'name', 'fips', 'cases', 'deaths')
+        model = State
+        fields = ('name', 'fips', 'cases', 'deaths')
