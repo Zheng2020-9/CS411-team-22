@@ -19,7 +19,7 @@ from rest_framework import routers
 from todo import views
 
 router = routers.DefaultRouter()
-router.register(r'Countys', views.CountyView, 'County')
+router.register(r'States', views.StateView, 'State')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

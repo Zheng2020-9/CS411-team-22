@@ -31,6 +31,6 @@ class State(models.Model):
         return self.name
 
 # update state db
-state_dict = states_init()
-for state in state_dict:
-    State(name=state, fips=int(state_dict[state][0]), cases=int(state_dict[state][1]), deaths=int(state_dict[state][2])).save()
+#state_dict = states_init()
+#for state in state_dict:
+ #   State(name=state, fips=int(state_dict[state][0]), cases=int(state_dict[state][1]), deaths=int(state_dict[state][2])).save()
