@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
 from rest_framework import viewsets
 from .serializers import CountySerializer
 from .serializers import StateSerializer
 from .models import County
 from .models import State
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 
 # Create your views here.
 
@@ -25,3 +27,19 @@ class StateView(viewsets.ViewSet):
         state = get_object_or_404(queryset, name=name)
         serializer = StateSerializer(state)
         return Response(serializer.data)   
+
+  
+
+
+
+def search_view(request):
+
+    return render(request,'test.html')
+
+def handle(request):
+    
+    text = request.POST.get('sts')
+
+
+    return HttpResponse(text)
+    
