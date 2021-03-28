@@ -24,4 +24,6 @@ router.register(r'Countys', views.CountyView, 'County')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('search', views.search_view),
+    path('handle', views.handle),
 ]
