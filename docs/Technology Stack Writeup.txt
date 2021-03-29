@@ -1,0 +1,3 @@
+In terms of our project’s backend technology stack, we considered both of the two technologies mentioned in the assignment sheet (Node and Django). Since we got to see a Node demo in lecture, we thought it would’ve been a good way to start the project and get a simple prototype up and running. That being said, most of our group members were unfamiliar with JavaScript. That made Django a much more appealing option in the long run, where we were all familiar and comfortable enough with Python. 
+
+For our frontend stack, we opted in for React to pair with a Django backend at the recommendation of students outside of the class. There was also enough documentation and tutorials online that gave us a good enough understanding to go off of and start developing a prototype. 
