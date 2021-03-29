@@ -20,8 +20,9 @@ class InfoForm extends React.Component {
 
   handleSubmit(event) {
 	axios.get("/api/States/" +  this.state.value).then((res) => {
-		const response = JSON.stringify(res.data);
-		alert(response)
+		var reply = res.data;
+		var report = reply.name + " Covid Report | Cases: " + reply.cases + ", Deaths: " + reply.deaths;  
+		alert(report)
 		console.log(res);
 		console.log(res.data);
 	
