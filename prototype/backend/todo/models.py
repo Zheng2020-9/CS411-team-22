@@ -4,6 +4,10 @@ import csv
 import urllib.request
 import io
 
+
+from django.contrib.auth.models import User
+
+
 # Create your models here.
 class County(models.Model):
     county_name = models.CharField(max_length=50, help_text='Name of a US County')
@@ -29,8 +33,30 @@ class State(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Userdata(models.Model):
+    account = models.CharField(max_length = 15)
+    pwd = models.CharField(max_length = 20)
 
 # update state db
 state_dict = states_init()
 for state in state_dict:
      State(name=state, fips=int(state_dict[state][0]), cases=int(state_dict[state][1]), deaths=int(state_dict[state][2])).save()
+
+
+
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+
+    org = models.CharField('Organization', max_length=128, blank=True)
+ 
+    telephone = models.CharField('Telephone', max_length=50, blank=True)
+    mod_date = models.DateTimeField('Last modified', auto_now=True)
+ 
+    class Meta:
+        verbose_name = 'User Profile'
+    
+    def __str__(self):
+        return "{}'s profile".format(self.user.__str__())

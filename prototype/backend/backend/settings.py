@@ -29,6 +29,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
+#define login form
+ACCOUNT_SIGNUP_FORM_CLASS = 'todo.forms.SignupForm'
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,10 +43,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'corsheaders',
     'rest_framework',
     'todo',
+    #add for third&login
+    
+    
+
+    
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+    #name
+    #'allauth.socialaccount.providers.facebook',
 ]
+
+SITE_ID = 2
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -129,3 +149,56 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000'
 ]
+
+
+#Login facebook
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
+        'SCOPE': ['email', 'public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'first_name',
+            'last_name',
+            'middle_name',
+            'name',
+            'name_format',
+            'picture',
+            'short_name'
+        ],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': 'path.to.callable',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v7.0',
+    }
+}
+
+
+
+# 基本设定
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = True
+LOGIN_REDIRECT_URL = '/accounts/profile/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+ 
+# e-mail settings
+ACCOUNT_EMAIL_VERIFICATION ="none"
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'zfsyq2014@163.com' # host email
+EMAIL_HOST_PASSWORD = 'password'
+EMAIL_USE_TLS = True
+EMAIL_FROM = 'zfsyq2014@163.com' # e-mail
+DEFAULT_FROM_EMAIL = 'zfsyq2014@163.com'
+
+
+
+
