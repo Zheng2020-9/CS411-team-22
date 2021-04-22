@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
     #name
     #'allauth.socialaccount.providers.facebook',
 ]
@@ -79,7 +80,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,"html"),],
+        'DIRS': [os.path.join(BASE_DIR,"templates"),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
