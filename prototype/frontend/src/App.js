@@ -3,6 +3,7 @@ import './App.css';
 import InfoForm from './InfoForm.js';
 import ReactDOM from 'react-dom';
 import axios from "axios";
+import GoogleBtn from './GoogleBtn';
 
 
 
@@ -20,6 +21,9 @@ function App() {
 	  <h1>Covid Dashboard App</h1>
 		<div className='row center'>
 		<InfoForm />
+
+		<GoogleBtn/>
+
 		</div>
     </div>
 	</div>
