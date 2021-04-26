@@ -20,13 +20,25 @@ from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 
 
-@csrf_exempt
+#@csrf_exempt
 
 # Create your views here.
 
-class CountyView(viewsets.ModelViewSet):
-    serializer_class = CountySerializer
-    queryset = County.objects.all()
+class CountyView(viewsets.ViewSet):
+
+    lookup_field = 'county_and_state'
+    
+    def list(self, request):
+        queryset = County.objects.all()
+        serializer = CountySerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, county_and_state=None):
+        queryset = County.objects.all()
+        county = get_object_or_404(queryset, county_and_state=county_and_state)
+        serializer = CountySerializer(county)
+        return Response(serializer.data)   
+
     
 class StateView(viewsets.ViewSet):
 
@@ -42,6 +54,7 @@ class StateView(viewsets.ViewSet):
         state = get_object_or_404(queryset, name=name)
         serializer = StateSerializer(state)
         return Response(serializer.data)   
+
 
   
 

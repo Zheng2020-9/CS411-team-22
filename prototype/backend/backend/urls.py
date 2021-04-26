@@ -20,8 +20,7 @@ from todo import views
 
 router = routers.DefaultRouter()
 router.register(r'States', views.StateView, 'State')
-
-
+router.register(r'Counties', views.CountyView, 'County')
 
 
 
