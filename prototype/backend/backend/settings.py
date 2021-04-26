@@ -30,6 +30,24 @@ ALLOWED_HOSTS = []
 
 
 
+#dotenv_path = join(dirname(__file__), '.env')
+#load_dotenv(dotenv_path)
+
+
+
+
+# DJANGO OAUTH TOOLKIT ID and SECRET used in github_social.views
+CLIENT_ID = os.environ.get("CLIENT_ID")
+CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
+
+
+
+
+
+
+
+
+
 #define login form
 ACCOUNT_SIGNUP_FORM_CLASS = 'todo.forms.SignupForm'
 
@@ -48,6 +66,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'todo',
     #add for third&login
+    
+    
+    'oauth2_provider',
+    
+    
     
     
 
@@ -88,6 +111,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -152,31 +177,7 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 
-#Login facebook
 
-SOCIALACCOUNT_PROVIDERS = {
-    'facebook': {
-        'METHOD': 'oauth2',
-        'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
-        'SCOPE': ['email', 'public_profile'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-        'INIT_PARAMS': {'cookie': True},
-        'FIELDS': [
-            'id',
-            'first_name',
-            'last_name',
-            'middle_name',
-            'name',
-            'name_format',
-            'picture',
-            'short_name'
-        ],
-        'EXCHANGE_TOKEN': True,
-        'LOCALE_FUNC': 'path.to.callable',
-        'VERIFIED_EMAIL': False,
-        'VERSION': 'v7.0',
-    }
-}
 
 
 
@@ -200,6 +201,20 @@ EMAIL_USE_TLS = True
 EMAIL_FROM = 'zfsyq2014@163.com' # e-mail
 DEFAULT_FROM_EMAIL = 'zfsyq2014@163.com'
 
+# GOOGLE
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get(
+    "SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
 
+# GITHUB
+SOCIAL_AUTH_GITHUB_KEY = os.environ.get('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('SOCIAL_AUTH_GITHUB_SECRET')
+
+CORS_ALLOW_CREDENTIALS = True
+
+#DJANGO OAUTH TOOLKIT EXPIRATION SECONDS  - DEFAULT IS 36000 WHICH IS 10 hours
+OAUTH2_PROVIDER = {
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 36000,
+}
 
 
