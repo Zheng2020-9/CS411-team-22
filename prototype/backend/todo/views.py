@@ -131,7 +131,7 @@ def profile_update(request):
  
     return render(request, 'account/profile_update.html', {'form': form, 'user': user})
 
-
+@api_view(['POST'])
 def github_authenticate(request):
     github_token = generate_github_access_token(
         github_client_id=SOCIAL_AUTH_GITHUB_KEY,
