@@ -16,7 +16,6 @@ from .forms import ProfileForm
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-
 from django.template import RequestContext
 from .oauth import generate_github_access_token, convert_to_auth_token, get_user_from_token
 
@@ -27,7 +26,6 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-<<<<<<< HEAD
 #@csrf_exempt
 
 # Create your views here.
