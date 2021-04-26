@@ -133,6 +133,10 @@ def profile_update(request):
 
 @api_view(['POST'])
 def github_authenticate(request):
+    
+    print(request);
+
+
     github_token = generate_github_access_token(
         github_client_id=SOCIAL_AUTH_GITHUB_KEY,
         github_client_secret=SOCIAL_AUTH_GITHUB_SECRET,
