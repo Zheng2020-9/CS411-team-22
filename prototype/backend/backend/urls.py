@@ -35,4 +35,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('accounts/', include('todo.urls')),
     
+    
 ]

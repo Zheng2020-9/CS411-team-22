@@ -18,8 +18,16 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
 from django.template import RequestContext
+from .oauth import generate_github_access_token, convert_to_auth_token, get_user_from_token
 
+from django.conf import settings
+from .forms import UserSerializer
 
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+<<<<<<< HEAD
 #@csrf_exempt
 
 # Create your views here.
@@ -39,6 +47,26 @@ class CountyView(viewsets.ViewSet):
         serializer = CountySerializer(county)
         return Response(serializer.data)   
 
+=======
+
+# Create your views here.
+
+
+# GITHUB ID AND SECRET
+SOCIAL_AUTH_GITHUB_KEY = settings.SOCIAL_AUTH_GITHUB_KEY
+SOCIAL_AUTH_GITHUB_SECRET = settings.SOCIAL_AUTH_GITHUB_SECRET
+
+# OAUTH TOOLKIT ID AND SECRET
+CLIENT_ID = settings.CLIENT_ID
+CLIENT_SECRET = settings.CLIENT_SECRET
+
+
+
+
+class CountyView(viewsets.ModelViewSet):
+    serializer_class = CountySerializer
+    queryset = County.objects.all()
+>>>>>>> Vivian
     
 class StateView(viewsets.ViewSet):
 
@@ -114,4 +142,24 @@ def profile_update(request):
  
     return render(request, 'account/profile_update.html', {'form': form, 'user': user})
 
+
+def github_authenticate(request):
+    github_token = generate_github_access_token(
+        github_client_id=SOCIAL_AUTH_GITHUB_KEY,
+        github_client_secret=SOCIAL_AUTH_GITHUB_SECRET,
+        github_code=request.data['code']
+    )
+    django_auth_token = convert_to_auth_token(
+        client_id=CLIENT_ID,
+        client_secret=CLIENT_SECRET,
+        backend='github',
+        token=github_token
+    )
+    user = get_user_from_token(django_auth_token)
+
+    return Response(
+        {'token': django_auth_token,
+         'user': UserSerializer(user).data},
+        status=status.HTTP_201_CREATED
+    )
     
