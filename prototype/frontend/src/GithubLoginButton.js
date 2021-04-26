@@ -1,15 +1,19 @@
 import React from "react";
 import GitHubLogin from "react-github-login";
+import axios from "axios";
+
 
 const GithubLoginButton = props => {
   const onSuccess = response => {
     console.log(response);
-    sendGithubCode(response);
+	alert(JSON.stringify(response));
+    //sendGithubCode(response);
+	testSendGithubAuthCode(response);
   };
   const onFailure = response => console.error(response);
   return (
     <GitHubLogin
-      clientId="0e04fc00c07db82338b0"
+      clientId="ce1bfb1626bb04675b10"
       onSuccess={onSuccess}
       onFailure={onFailure}
       redirectUri=""
@@ -19,7 +23,7 @@ const GithubLoginButton = props => {
   );
 };
 
-const url = "http://127.0.0.1:8000";
+const url = "http://localhost:8000";
 
 const isSendingGithubCode = () => ({
   type: "SENDING_GITHUB_CODE"
@@ -54,11 +58,22 @@ const sentGithubCodeFailure = err => ({
   err
 });
 
+function testSendGithubAuthCode(code){
+	
+	const headers = {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+		
+		axios.post('/githubverify/', JSON.stringify(code), {headers: headers});
+
+}
+
 function sendGithubCode(code) {
   return async function(dispatch) {
     dispatch(isSendingGithubCode());
     try {
-      let response = await fetch(`${url}/githubcode/`, {
+      let response = await fetch('localhost:8000/githubverify/', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
