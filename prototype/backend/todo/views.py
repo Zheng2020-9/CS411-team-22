@@ -44,9 +44,7 @@ class CountyView(viewsets.ViewSet):
         county = get_object_or_404(queryset, county_and_state=county_and_state)
         serializer = CountySerializer(county)
         return Response(serializer.data)   
-
-=======
-
+        
 # Create your views here.
 
 
@@ -58,14 +56,6 @@ SOCIAL_AUTH_GITHUB_SECRET = settings.SOCIAL_AUTH_GITHUB_SECRET
 CLIENT_ID = settings.CLIENT_ID
 CLIENT_SECRET = settings.CLIENT_SECRET
 
-
-
-
-class CountyView(viewsets.ModelViewSet):
-    serializer_class = CountySerializer
-    queryset = County.objects.all()
->>>>>>> Vivian
-    
 class StateView(viewsets.ViewSet):
 
     lookup_field = 'name'
