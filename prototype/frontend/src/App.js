@@ -21,9 +21,6 @@ function App() {
 	  <h1>Covid Dashboard App</h1>
 		<div className='row center'>
 		<InfoForm />
-		<script>
-
-		</script>
 		<GithubLoginButton />
 		</div>
     </div>

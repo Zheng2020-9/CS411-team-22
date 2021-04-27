@@ -25,12 +25,10 @@ from .forms import UserSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.views.decorators.csrf import ensure_csrf_cookie
+
 #@csrf_exempt
 
 # Create your views here.
-
-
 
 class CountyView(viewsets.ViewSet):
 
@@ -110,7 +108,6 @@ def login(request):
 
 def profile(request):
     user = request.user
-    print(request)
     return render(request, 'account/profile.html', {'user': user})
 
 
@@ -140,7 +137,6 @@ def profile_update(request):
 
 
 def github_authenticate(request):
-    print(request)
     github_token = generate_github_access_token(
         github_client_id=SOCIAL_AUTH_GITHUB_KEY,
         github_client_secret=SOCIAL_AUTH_GITHUB_SECRET,

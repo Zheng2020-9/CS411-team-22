@@ -10,7 +10,6 @@ import githubAuthReducer from './githubAuthReducer';
 
 let store = createStore(githubAuthReducer);
 
-
 ReactDOM.render(
   <React.StrictMode>
     <App />
