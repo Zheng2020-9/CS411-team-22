@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_framework import routers
 from todo import views
+from django.conf.urls import url
+
 
 router = routers.DefaultRouter()
 router.register(r'States', views.StateView, 'State')
@@ -34,6 +36,8 @@ urlpatterns = [
    #URL for account
     path('accounts/', include('allauth.urls')),
     path('accounts/', include('todo.urls')),
+    url(r"^githubverify/$", views.github_authenticate, name='github-authenticate'),
+
     
     
 ]

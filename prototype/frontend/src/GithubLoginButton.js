@@ -1,10 +1,13 @@
 import React from "react";
 import GitHubLogin from "react-github-login";
+import axios from "axios";
 
 const GithubLoginButton = props => {
   const onSuccess = response => {
     console.log(response);
-    sendGithubCode(response);
+    //sendGithubCode(response);
+	alert(JSON.stringify(response))
+	testSendGithubAuthCode(response);
   };
   const onFailure = response => console.error(response);
   return (
@@ -53,6 +56,17 @@ const sentGithubCodeFailure = err => ({
   type: "SENT_GITHUB_CODE_FAILURE",
   err
 });
+
+function testSendGithubAuthCode(code){
+
+	const headers = {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+
+		axios.post('/githubverify/', JSON.stringify(code), {headers: headers});
+
+}
 
 function sendGithubCode(code) {
   return async function(dispatch) {

@@ -133,8 +133,8 @@ def profile_update(request):
 
 def github_authenticate(request):
     github_token = generate_github_access_token(
-        github_client_id=SOCIAL_AUTH_GITHUB_KEY,
-        github_client_secret=SOCIAL_AUTH_GITHUB_SECRET,
+        github_client_id= "0e04fc00c07db82338b0",#SOCIAL_AUTH_GITHUB_KEY,
+        github_client_secret= "56d8708e74cb846b460d8d2298e71c4ecdbe8ed4",#SOCIAL_AUTH_GITHUB_SECRET,
         github_code=request.data['code']
     )
     django_auth_token = convert_to_auth_token(
