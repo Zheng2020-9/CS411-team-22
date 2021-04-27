@@ -45,6 +45,7 @@ class CountyView(viewsets.ViewSet):
         serializer = CountySerializer(county)
         return Response(serializer.data)   
 
+=======
 
 # Create your views here.
 
@@ -60,6 +61,10 @@ CLIENT_SECRET = settings.CLIENT_SECRET
 
 
 
+class CountyView(viewsets.ModelViewSet):
+    serializer_class = CountySerializer
+    queryset = County.objects.all()
+>>>>>>> Vivian
     
 class StateView(viewsets.ViewSet):
 
