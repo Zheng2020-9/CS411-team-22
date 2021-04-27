@@ -138,14 +138,9 @@ def profile_update(request):
  
     return render(request, 'account/profile_update.html', {'form': form, 'user': user})
 
-<<<<<<< HEAD
 
 def github_authenticate(request):
     print(request)
-=======
-@api_view(['POST'])
-def github_authenticate(request):
->>>>>>> parent of de7ce01 (Update client id)
     github_token = generate_github_access_token(
         github_client_id=SOCIAL_AUTH_GITHUB_KEY,
         github_client_secret=SOCIAL_AUTH_GITHUB_SECRET,

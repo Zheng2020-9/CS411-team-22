@@ -22,6 +22,11 @@ def generate_github_access_token(github_client_id, github_client_secret,github_c
     }),
     headers={'content-type': 'application/json'}
     )
+    
+    print(github_code);
+    print(auth_response);
+    print(github_code);
+    
     token= re.search(r"access_token=([a-zA-Z0-9]+)", auth_response.content.decode('utf-8'))
     if token is None:
         raise PermissionError(auth_response)
