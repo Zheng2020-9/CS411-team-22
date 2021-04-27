@@ -130,7 +130,7 @@ def profile_update(request):
  
     return render(request, 'account/profile_update.html', {'form': form, 'user': user})
 
-
+@api_view(['POST'])
 def github_authenticate(request):
     github_token = generate_github_access_token(
         github_client_id= "0e04fc00c07db82338b0",#SOCIAL_AUTH_GITHUB_KEY,
@@ -138,8 +138,8 @@ def github_authenticate(request):
         github_code=request.data['code']
     )
     django_auth_token = convert_to_auth_token(
-        client_id=CLIENT_ID,
-        client_secret=CLIENT_SECRET,
+        client_id="0e04fc00c07db82338b0",
+        client_secret="56d8708e74cb846b460d8d2298e71c4ecdbe8ed4",
         backend='github',
         token=github_token
     )
