@@ -75,8 +75,9 @@ INSTALLED_APPS = [
     
     
 
-    
 
+    'rest_framework_social_oauth2',#add com
+    'social_django',#add com
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
