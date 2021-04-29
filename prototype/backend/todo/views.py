@@ -153,8 +153,6 @@ def github_authenticate(request):
         token=github_token
     )
     user = get_user_from_token(django_auth_token)
-    #if user == None:
-       # return render(request, 'login.html')
 
     return Response(
         {'token': django_auth_token,
