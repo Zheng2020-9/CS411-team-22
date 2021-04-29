@@ -1,6 +1,7 @@
 import re 
 import requests
 import json
+import logging
 
 from django.contrib.auth.models import User
 from oauth2_provider.models import AccessToken
@@ -25,6 +26,21 @@ def generate_github_access_token(github_client_id, github_client_secret,github_c
     token= re.search(r"access_token=([a-zA-Z0-9]+)", auth_response.content.decode('utf-8'))
     if token is None:
         raise PermissionError(auth_response)
+        
+    token_string = token.string;
+    token_string = token_string.replace("access_token=","");
+    arr = token_string.split("&");
+    token_string = arr[0];
+    
+    print(token_string);    
+    print("Making GitHub API Request for Username")
+    headers1 = {'Authorization': 'token %s' % token_string}
+    r = requests.get("https://api.github.com/user", headers=headers1)
+    print(r);
+    print(r.content.decode('utf-8'));
+    print("Does logger work?");
+    
+    
     return token.group(1)
 
 def convert_to_auth_token(client_id, client_secret, backend, token):
@@ -44,6 +60,11 @@ def convert_to_auth_token(client_id, client_secret, backend, token):
     'backend': backend,
     'token': token,
     }
+    
+
+    
+    
+    
     response = requests.post('http://127.0.0.1:8000/auth/convert-token/', params=params)
     return response.json()
 
