@@ -65,7 +65,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'todo',
-    'drf_multiple_model',
     #add for third&login
     
     

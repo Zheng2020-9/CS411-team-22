@@ -34,12 +34,13 @@ def counties_init():
         name = row[1] + row[2]
         county = row[1]
         state = row[2]
+        fips = row[3]
         cases = row[4]
         deaths = row[5]
         if len(deaths) == 0:
             deaths = 'Unknown'
         
-        counties_dict[name] = [county] + [state] + [cases] + [deaths]
+        counties_dict[name] = [county] + [state] + [cases] + [deaths] + [fips]
 
     counties_dict.pop('countystate', None)  # to remove header
     return counties_dict
