@@ -38,7 +38,7 @@ urlpatterns = [
     path('accounts/', include('todo.urls')),
     url(r"^githubverify/$", views.github_authenticate, name='github-authenticate'),
     url(r'^auth/', include('rest_framework_social_oauth2.urls')),
-    url(r'^api-auth/', include('rest_framework.urls')),
+    url(r'^api-auth/', include('rest_framework.urls')),#change
     
     
 ]
