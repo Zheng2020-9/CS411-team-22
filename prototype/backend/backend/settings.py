@@ -67,7 +67,7 @@ INSTALLED_APPS = [
     'todo',
     'drf_multiple_model',
     #add for third&login
-
+    
     
     'oauth2_provider',
     
@@ -75,8 +75,8 @@ INSTALLED_APPS = [
     
     
 
-    'rest_framework_social_oauth2',#add
-    'social_django',#add
+    
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -114,7 +114,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
-                
             ],
         },
     },
