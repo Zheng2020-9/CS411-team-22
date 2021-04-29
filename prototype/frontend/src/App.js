@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import InfoForm from './InfoForm.js';
 import GithubLoginButton from './GithubLoginButton.js';
+import MapChart from './MapChart.js';
 import ReactDOM from 'react-dom';
 import axios from "axios";
 
@@ -25,6 +26,7 @@ function App() {
 
 		</script>
 		<GithubLoginButton />
+		<MapChart />
 		</div>
     </div>
 	</div>

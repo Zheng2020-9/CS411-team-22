@@ -25,9 +25,6 @@ def generate_github_access_token(github_client_id, github_client_secret,github_c
     token= re.search(r"access_token=([a-zA-Z0-9]+)", auth_response.content.decode('utf-8'))
     if token is None:
         raise PermissionError(auth_response)
-    print(token)
-    print(token.group(1))
-    
     return token.group(1)
 
 def convert_to_auth_token(client_id, client_secret, backend, token):
@@ -56,11 +53,5 @@ def get_user_from_token(django_auth_token):
     :param django_auth_token: Oauthtoolkit access TOKEN
     :return: user object
     """
-    if 'access_token' in django_auth_token:
-        return User.objects.get( id=AccessToken.objects.get(token=django_auth_token['access_token']).user_id)
-    else:
-        user = User.objects.create_user(username='asd',password='fsa',email='safsf')
-        return user
-        
-    
-    
+    return User.objects.get(
+    id=AccessToken.objects.get(token=django_auth_token['access_token']).user_id)

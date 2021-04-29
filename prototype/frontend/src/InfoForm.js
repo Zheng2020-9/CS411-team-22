@@ -23,12 +23,6 @@ class InfoForm extends React.Component {
 		var reply = res.data;
 		var report = reply.name + " Covid Report | Cases: " + reply.cases + ", Deaths: " + reply.deaths;  
 		alert(report)
-		console.log(res);
-		console.log(res.data);
-	
-	
-	
-	
 	}).catch();
     event.preventDefault();
   }
