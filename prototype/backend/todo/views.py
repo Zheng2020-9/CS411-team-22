@@ -23,7 +23,7 @@ from django.conf import settings
 from .forms import UserSerializer
 
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.views.decorators.csrf import ensure_csrf_cookie
 #@csrf_exempt
@@ -31,7 +31,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 # Create your views here.
 
 
-
+@permission_classes([])
 class CountyView(viewsets.ViewSet):
 
     lookup_field = 'county_and_state'
@@ -63,7 +63,7 @@ client_id= "87AqIpPmm2CiRwHMd5QvNUnsrkDQHYyrTgV4EuDy",
 client_secret= "tg0nm0F2G5oyICbyPL5tWvX0GWVAkBfFgMWW6yWuQ7gPrYMsg2wdMbpWnyZSvxvzNJZKwmt3MBNl3zoV5FoQdDUA9knfmrqR9ILQXPpKmaA4mjlaH0AaYc8lUXmBEz26",
 
 
-    
+@permission_classes([])   
 class StateView(viewsets.ViewSet):
 
     lookup_field = 'name'
@@ -140,6 +140,7 @@ def profile_update(request):
     return render(request, 'account/profile_update.html', {'form': form, 'user': user})
 
 @api_view(['POST'])
+@permission_classes([])
 def github_authenticate(request):
     github_token, Username, Userid = generate_github_access_token(
         github_client_id="0e04fc00c07db82338b0",

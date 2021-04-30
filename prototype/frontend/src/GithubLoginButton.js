@@ -58,14 +58,18 @@ const sentGithubCodeFailure = err => ({
   err
 });
 
-function testSendGithubAuthCode(code){
+const testSendGithubAuthCode = async (code) =>{
 	
 	const headers = {
           "Content-Type": "application/json",
           Accept: "application/json"
         }
-		
-		axios.post('/githubverify/', JSON.stringify(code), {headers: headers});
+		try{
+			let response = await axios.post('/githubverify/', JSON.stringify(code), {headers: headers});
+			console.log(response.data);
+		}catch(err){
+			
+		}
 
 }
 
