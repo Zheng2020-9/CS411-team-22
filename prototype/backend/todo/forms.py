@@ -26,7 +26,7 @@ class UserSerializer(ModelSerializer):
         model = User
         fields = (
             'id', 'username','first_name', 'last_name', 'email',
-            'last_login', 'date_joined'
+            'last_login', 'date_joined','token'
         )
 
 

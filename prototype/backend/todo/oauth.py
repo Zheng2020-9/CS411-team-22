@@ -2,6 +2,7 @@ import re
 import requests
 import json
 import logging
+from .token import enctry, dectry
 
 from django.contrib.auth.models import User
 from oauth2_provider.models import AccessToken
@@ -31,17 +32,26 @@ def generate_github_access_token(github_client_id, github_client_secret,github_c
     token_string = token_string.replace("access_token=","");
     arr = token_string.split("&");
     token_string = arr[0];
-    
+    print('token=',token)
     print(token_string);    
     print("Making GitHub API Request for Username")
     headers1 = {'Authorization': 'token %s' % token_string}
     r = requests.get("https://api.github.com/user", headers=headers1)
-    print(r);
-    print(r.content.decode('utf-8'));
+    #print(r);
+    #print(r.content.decode('utf-8'));
+    data = r.content.decode('utf-8')
+    
+    data = json.loads(data)
+    Username = data['login']
+    Userid = data['id']
+    print(Username)
+    print(Username)
+    print(Username)
+    print(Username)
     print("Does logger work?");
     
     
-    return token.group(1)
+    return token.group(1), Username, Userid
 
 def convert_to_auth_token(client_id, client_secret, backend, token):
     """
@@ -54,19 +64,22 @@ def convert_to_auth_token(client_id, client_secret, backend, token):
     :return: django auth token
     """
     params = {
-    'grant_type': 'convert_token',
+    'grant_type': "convert_token",
     'client_id': client_id,
     'client_secret': client_secret,
     'backend': backend,
     'token': token,
     }
+    print(client_id)
+    print(client_secret)
     
-
+    print(params)
     
+    params = json.dumps(params)
     
+    #response = requests.post('http://127.0.0.1:8000/auth/convert-token/', params=params)
     
-    response = requests.post('http://127.0.0.1:8000/auth/convert-token/', params=params)
-    return response.json()
+    return None #response.json()
 
 def get_user_from_token(django_auth_token):
     """
@@ -74,5 +87,13 @@ def get_user_from_token(django_auth_token):
     :param django_auth_token: Oauthtoolkit access TOKEN
     :return: user object
     """
-    return User.objects.get(
-    id=AccessToken.objects.get(token=django_auth_token['access_token']).user_id)
+    Username = dectry(django_auth_token)
+    user = User.objects.get(Username)
+    if user != None:
+        return user
+    else:
+        pwd = enctry(Username)
+        user = User.objects.create_user(username=Username,password=pwd)
+        return user
+    
+    #return User.objects.get(id=AccessToken.objects.get(token=django_auth_token['access_token']).user_id)
