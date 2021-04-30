@@ -146,7 +146,7 @@ def github_authenticate(request):
         github_client_secret="56d8708e74cb846b460d8d2298e71c4ecdbe8ed4",
         github_code=request.data['code']
     )
-    django_auth_token = convert_to_auth_token(enctry(Username))
+    django_auth_token = enctry(Username)#convert_to_auth_token(enctry(Username))
     user = get_user_from_token(django_auth_token)
 
     return Response(
