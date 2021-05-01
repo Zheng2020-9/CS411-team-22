@@ -29,6 +29,14 @@ const MapChart = ({ setTooltipContent }) => {
 			for (var i in counties) {
 				counties[i].id = counties[i].fips
 				counties[i].name = counties[i].county
+				counties[i].state = counties[i].state
+				counties[i].case = counties[i].cases
+				counties[i].death = counties[i].deaths
+				counties[i].c_case = counties[i].confirmed_cases
+				counties[i].c_death = counties[i].confirmed_deaths
+				counties[i].p_case = counties[i].probable_cases
+				counties[i].p_death = counties[i].probable_deaths
+				counties[i].date = counties[i].date
 			}
 			setData(counties);
 		});
