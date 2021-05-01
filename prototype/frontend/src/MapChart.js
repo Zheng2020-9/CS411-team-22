@@ -9,15 +9,6 @@ import axios from "axios";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
 
-const rounded = num => {
-	if (num > 1000000000) {
-	  return Math.round(num / 100000000) / 10 + "Bn";
-	} else if (num > 1000000) {
-	  return Math.round(num / 100000) / 10 + "M";
-	} else {
-	  return Math.round(num / 100) / 10 + "K";
-	}
-  };
 
 const MapChart = ({ setTooltipContent }) => {
 	const [data, setData] = useState([]);
@@ -108,7 +99,7 @@ const MapChart = ({ setTooltipContent }) => {
 		]);
 
 	return (
-		<ComposableMap projection="geoAlbersUsa">
+		<ComposableMap data-tip="" projection="geoAlbersUsa">
 			<Geographies geography={geoUrl}>
 				{({ geographies }) =>
 					geographies.map(geo => {
@@ -120,12 +111,15 @@ const MapChart = ({ setTooltipContent }) => {
 								fill={cur ? colorScale(cur.cases) : "#EEE"}
 								//tooltip hover functions
 								onMouseEnter={() => {
-									const { NAME, Cov_EST } = geo.properties;
-									setTooltipContent(`${NAME} — ${rounded(Cov_EST)}`);
+									// const [data, setData] = useState([]);
+									// const { NAME, POP_EST } = geo.properties;
+									//now the map has state and cases info 
+									setTooltipContent(`${cur.state} — cases: ${(cur.case)}`);
 								  }}
 								onMouseLeave={() => {
 									setTooltipContent("");
 								  }}
+								  //css for hover over the map
 								  style={{
 									hover: {
 									  fill: "#0000FF",
