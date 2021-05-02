@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import County, State
 
 class CountyAdmin(admin.ModelAdmin):
-    list_display = ('county_name', 'state', 'fips' , 'cases', 'deaths')
+    list_display = ('county_name', 'state', 'fips' , 'cases', 'deaths', 'vuln_score')
     
 class StateAdmin(admin.ModelAdmin):
     list_display = ('name', 'fips', 'cases', 'deaths')

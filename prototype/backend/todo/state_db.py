@@ -1,6 +1,7 @@
 import csv
 import urllib.request
 import io
+from datetime import date, timedelta
 
 # csv_import: get a .csv file from url
 def csv_import(url):
@@ -44,3 +45,38 @@ def counties_init():
 
     counties_dict.pop('countystate', None)  # to remove header
     return counties_dict
+
+def county_vs_init():
+    yesterday = date.today() - timedelta(days=1)
+    url = 'https://raw.githubusercontent.com/COVID19PVI/data/master/Model11.2.1/Model_11.2.1_' + yesterday.strftime('%Y%m%d') + '_results.csv'
+    db = csv_import(url)
+    county_score_dict = {}
+
+    for row in db:
+        state_county = row[3]
+        if state_county == 'Name':
+            continue
+    
+        splitup = state_county.split(", ")
+        name = splitup[1] + splitup[0]
+
+        index_val = str( \
+                    round (float(row[5]) * 0.2  + \
+                    float(row[6])  * 0.03 + \
+                    float(row[7])  * 0.07 + \
+                    float(row[8])  * 0.08 + \
+                    float(row[9])  * 0.08 + \
+                    float(row[10]) * 0.07 + \
+                    float(row[11]) * 0.04 + \
+                    float(row[12]) * 0.08 + \
+                    float(row[13]) * 0.08 + \
+                    float(row[14]) * 0.08 + \
+                    float(row[15]) * 0.08 + \
+                    float(row[16]) * 0.04 , 4)  \
+                    )
+
+        county_score_dict[name] = index_val
+        # iden = name + " has a val of: " + index_val
+        # print(iden)
+
+    return county_score_dict

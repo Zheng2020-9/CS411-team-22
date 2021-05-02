@@ -1,5 +1,5 @@
 from django.db import models
-from .state_db import states_init, counties_init
+from .state_db import states_init, counties_init, county_vs_init
 import csv
 import urllib.request
 import io
@@ -16,6 +16,7 @@ class County(models.Model):
     fips = models.CharField(max_length=6, help_text='Assigned fips value (identifier)')
     cases = models.CharField(max_length=10, help_text='Number of COVID-19 cases')
     deaths = models.CharField(max_length=10, help_text='Number of COVID-19 deaths')
+    vuln_score = models.CharField(max_length=7, help_text='Vulnerability score of the County')
 
     class Meta:
         ordering = ['state','county_name']
@@ -43,15 +44,38 @@ class Userdata(models.Model):
 # COMMENT OUT IF RUNNING FOR THE FIRST TIME
 state_dict = states_init()
 for state in state_dict:
-     State(name=state, fips=int(state_dict[state][0]), cases=int(state_dict[state][1]), deaths=int(state_dict[state][2])).save()
+     State(name=state, \
+           fips=int(state_dict[state][0]), \
+           cases=int(state_dict[state][1]), \
+           deaths=int(state_dict[state][2])\
+     ).save()
 
 # update counties db
 # COMMENT OUT IF RUNNING FOR THE FIRST TIME
 county_db = counties_init()
+county_vuln_db = county_vs_init()
 for county in county_db:
-    County(county_name=county_db[county][0], state=county_db[county][1], county_and_state=county, cases=county_db[county][2], deaths=county_db[county][3], fips=county_db[county][4]).save()
 
+    cases_val = county_db[county][2]
+    deaths_val = county_db[county][3]
+    try:
+        case_death_ratio = float(deaths_val) / float(cases_val)
+    except:
+        case_death_ratio = 0.0
 
+    try:
+        vuln_val = str(round(float(county_vuln_db[county]) + (0.07 * case_death_ratio), 4))
+    except KeyError:
+        vuln_val = 'Unknown'
+
+    County(county_name=county_db[county][0], \
+           state=county_db[county][1], \
+           county_and_state=county, \
+           cases=cases_val, \
+           deaths=deaths_val, \
+           fips=county_db[county][4],\
+           vuln_score=vuln_val\
+    ).save()
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
