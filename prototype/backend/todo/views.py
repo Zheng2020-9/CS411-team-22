@@ -140,19 +140,21 @@ def profile_update(request):
     return render(request, 'account/profile_update.html', {'form': form, 'user': user})
 
 @api_view(['POST'])
-@permission_classes([])
+
 def github_authenticate(request):
     github_token, Username, Userid = generate_github_access_token(
         github_client_id="0e04fc00c07db82338b0",
         github_client_secret="56d8708e74cb846b460d8d2298e71c4ecdbe8ed4",
         github_code=request.data['code']
     )
+
     django_auth_token = enctry(Username)#convert_to_auth_token(enctry(Username))
     user = get_user_from_token(django_auth_token)
+    print("go return")
 
     return Response(
         {'token': django_auth_token,
-         'user': UserSerializer(user).data},
-        status=status.HTTP_201_CREATED
+         'user': Username},#UserSerializer(user).data
+         status=status.HTTP_201_CREATED
     )
     

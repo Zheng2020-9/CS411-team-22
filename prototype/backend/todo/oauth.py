@@ -45,9 +45,6 @@ def generate_github_access_token(github_client_id, github_client_secret,github_c
     Username = data['login']
     Userid = data['id']
     print(Username)
-    print(Username)
-    print(Username)
-    print(Username)
     print("Does logger work?");
     
     
@@ -70,10 +67,7 @@ def convert_to_auth_token(client_id, client_secret, backend, token):
     'backend': backend,
     'token': token,
     }
-    print(client_id)
-    print(client_secret)
-    
-    print(params)
+   
     
     params = json.dumps(params)
     
@@ -87,13 +81,19 @@ def get_user_from_token(django_auth_token):
     :param django_auth_token: Oauthtoolkit access TOKEN
     :return: user object
     """
+    #print("In_User11111111111111111111111")
     Username = dectry(django_auth_token)
-    user = User.objects.get(Username)
+    #print("In_User22222222222222222222222")
+    user = User.objects.get(username=Username)
+    #print("In_User33333333333333333333333")
     if user != None:
         return user
     else:
         pwd = enctry(Username)
-        user = User.objects.create_user(username=Username,password=pwd)
+        #print("In_User33333333333333333333333")
+        User.objects.create_user(username=Username,password=pwd)
+        #print("creat user12314114141412")
+        user = User.objects.get(Username)
         return user
     
     #return User.objects.get(id=AccessToken.objects.get(token=django_auth_token['access_token']).user_id)
