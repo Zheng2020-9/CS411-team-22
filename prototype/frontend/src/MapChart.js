@@ -100,6 +100,7 @@ const MapChart = ({ setTooltipContent }) => {
 
 	return (
 		<ComposableMap data-tip="" projection="geoAlbersUsa">
+			<ZoomableGroup>
 			<Geographies geography={geoUrl}>
 				{({ geographies }) =>
 					geographies.map(geo => {
@@ -131,6 +132,7 @@ const MapChart = ({ setTooltipContent }) => {
 					})
 				}
 			</Geographies>
+			</ZoomableGroup>
 		</ComposableMap>
 	);
 };
