@@ -178,7 +178,7 @@ def user_operate(request):
     except User.DoesNotExist:
         HttpResponse('Access Denied')
     
-    user_profile = get_object_or_404(UserProfile, user=User)
+    user_profile = UserProfile.objects.get(user=user)
     print("User Profile: " + user_profile);
     
     if command == 'addBM':
