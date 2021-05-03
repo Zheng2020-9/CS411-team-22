@@ -1,7 +1,7 @@
 from django.shortcuts import render,HttpResponse
 from rest_framework import viewsets
 from .serializers import CountySerializer
-from .serializers import StateSerializer
+from .serializers import StateSerializer, UserProfileSerializer
 from .models import County
 from .models import State
 from .models import UserProfile
@@ -45,7 +45,23 @@ class CountyView(viewsets.ViewSet):
         queryset = County.objects.all()
         county = get_object_or_404(queryset, county_and_state=county_and_state)
         serializer = CountySerializer(county)
-        return Response(serializer.data)   
+        return Response(serializer.data)  
+
+@permission_classes([])
+class UserProfileView(viewsets.ViewSet):
+
+    lookup_field = 'user'
+    
+    def list(self, request):
+        queryset = UserProfile.objects.all()
+        serializer = UserProfileSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, user=None):
+        queryset = UserProfile.objects.all()
+        county = get_object_or_404(queryset, user=user)
+        serializer = UserSerializer(county)
+        return Response(serializer.data)
 
 
 # Create your views here.
@@ -168,16 +184,22 @@ def user_operate(request):
     print("Token: " + token);
     Userid = dectry(token)
     print("DecryToken: " + token);
+    user = User.objects.get(username=Userid)
+    print('User is: ' + str(user))
+    
+    user_profile = UserProfile.objects.get(user=user)
+    
+    #toAdd = '25025'
+    #user_profile.add_bookmark(toAdd)
+    #print(user_profile.get_bookmarks())
 
-    try:
-  
-        user = User.objects.get(username=Userid)
-        print(user.username);
-    except User.DoesNotExist:
-        HttpResponse('Access Denied')
+    #try:
+    #    user = User.objects.get(username=Userid)
+    #    print('is this working')
+    #except User.DoesNotExist:
+    #    HttpResponse('Access Denied')
     
     #user_profile = get_object_or_404(UserProfile, user=User)
-    user_profile = UserProfile(user=user)
 
     if command == 'addBM':
         Bookmark = request.data['BM']
@@ -186,7 +208,7 @@ def user_operate(request):
         Bookmark = request.data['BM']
         user_profile.delete_bookmark(Bookmark)
     elif command == 'getBM':
-        bookmarks = "retbookmark"#user_profile.get_bookmarks()
+        bookmarks = user_profile.get_bookmarks()
         return Response(
         {'BM': bookmarks}
         )

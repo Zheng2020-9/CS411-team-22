@@ -98,7 +98,7 @@ class UserProfile(models.Model):
     telephone = models.CharField('Telephone', max_length=50, blank=True)
     mod_date = models.DateTimeField('Last modified', auto_now=True)
 
-    bookmarks = models.CharField(max_length=500, blank=True)
+    bookmarks = models.CharField(max_length=500,blank=True, default='25025')
  
     class Meta:
         verbose_name = 'User Profile'
@@ -106,30 +106,23 @@ class UserProfile(models.Model):
     def __str__(self):
         return "{}'s profile".format(self.user.__str__())
 
-    def update_bookmarks(self, myList):
-        self.bookmarks = json.dumps(myList)
-        self.save()
-
     def add_bookmark(self, county):
-        jsonDec = json.decoder.JSONDecoder()
-        bookmark_list = jsonDec.decode(self.bookmarks)
+        bookmark_list = self.bookmarks.split(',')
         
         if county not in bookmark_list:
             bookmark_list.append(county)
 
-        self.bookmarks = json.dumps(bookmark_list)
+        self.bookmarks = joined_string = ",".join(bookmark_list)
         self.save()
 
     def delete_bookmark(self, county):
-        jsonDec = json.decoder.JSONDecoder()
-        bookmark_list = jsonDec.decode(self.bookmarks)
+        bookmark_list = self.bookmarks.split(',')
         
         if county in bookmark_list:
             bookmark_list.remove(county)
 
-        self.bookmarks = json.dumps(bookmark_list)
+        self.bookmarks = joined_string = ",".join(bookmark_list)
         self.save()
 
     def get_bookmarks(self):
-        jsonDec = json.decoder.JSONDecoder()
-        return jsonDec.decode(self.bookmarks)
+        return self.bookmarks
