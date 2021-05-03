@@ -158,17 +158,28 @@ def github_authenticate(request):
          status=status.HTTP_201_CREATED
     )
 
+@api_view(['POST'])
+@permission_classes([])
 def user_operate(request):
     token = request.data['token']
     command = request.data['command']
+    
+    print("Command: " + command);
+    print("Token: " + token);
     Userid = dectry(token)
+    print("DecryToken: " + token);
+
+    
     
     try:
-        user = User.objects.get(Userid)
+  
+        user = User.objects.get(username=Userid)
+        print(user.username);
     except User.DoesNotExist:
         HttpResponse('Access Denied')
     
-    user_profile = get_object_or_404(UserProfile, user=user)
+    user_profile = get_object_or_404(UserProfile, user=User)
+    print("User Profile: " + user_profile);
     
     if command == 'addBM':
         Bookmark = request.data['bookmark']

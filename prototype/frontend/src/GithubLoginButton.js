@@ -9,6 +9,8 @@ const GithubLoginButton = props => {
 	alert(JSON.stringify(response));
     //sendGithubCode(response);
 	testSendGithubAuthCode(response);
+	updateBookmarks();
+
   };
   const onFailure = response => console.error(response);
   return (
@@ -58,6 +60,20 @@ const sentGithubCodeFailure = err => ({
   err
 });
 
+const updateBookmarks = async () =>{
+	console.log("Updating bookmarks");
+	const params = {token: localStorage.getItem('token'), command: "getBM"};
+		console.log(JSON.stringify(params));
+
+	try{
+			let response = await axios.post('/useroperate/',params);
+			console.log(response.data);
+
+	}catch(err){
+	
+	}
+}
+
 const testSendGithubAuthCode = async (code) =>{
 	
 	const headers = {
@@ -67,6 +83,10 @@ const testSendGithubAuthCode = async (code) =>{
 		try{
 			let response = await axios.post('/githubverify/', JSON.stringify(code), {headers: headers});
 			console.log(response.data);
+			if(response.data != null){
+				console.log(response.data.token);
+				localStorage.setItem('token',response.data.token);
+			}
 		}catch(err){
 			
 		}
