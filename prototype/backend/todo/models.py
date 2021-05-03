@@ -3,7 +3,6 @@ from .state_db import states_init, counties_init, county_vs_init, rolling_avg_in
 import csv
 import urllib.request
 import io
-import json
 
 
 from django.contrib.auth.models import User
@@ -98,19 +97,9 @@ class UserProfile(models.Model):
  
     telephone = models.CharField('Telephone', max_length=50, blank=True)
     mod_date = models.DateTimeField('Last modified', auto_now=True)
-
-    bookmarks = models.CharField(max_length=500, blank=True)
  
     class Meta:
         verbose_name = 'User Profile'
     
     def __str__(self):
         return "{}'s profile".format(self.user.__str__())
-
-    def update_bookmarks(self, myList):
-        self.bookmarks = json.dumps(myList)
-        self.save()
-
-    def get_bookmarks(self):
-        jsonDec = json.decoder.JSONDecoder()
-        return jsonDec.decode(self.bookmarks)
