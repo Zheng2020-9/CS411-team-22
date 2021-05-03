@@ -1,5 +1,5 @@
 from django.db import models
-from .state_db import states_init, counties_init, county_vs_init
+from .state_db import states_init, counties_init, county_vs_init, rolling_avg_init
 import csv
 import urllib.request
 import io
@@ -17,6 +17,8 @@ class County(models.Model):
     cases = models.CharField(max_length=10, help_text='Number of COVID-19 cases')
     deaths = models.CharField(max_length=10, help_text='Number of COVID-19 deaths')
     vuln_score = models.CharField(max_length=7, help_text='Vulnerability score of the County')
+    avg_cases = models.CharField(max_length=10, help_text='Average number of COVID-19 cases in the past week')
+    avg_deaths = models.CharField(max_length=10, help_text='Average number of COVID-19 deaths in the past week')
 
     class Meta:
         ordering = ['state','county_name']
@@ -54,6 +56,8 @@ for state in state_dict:
 # COMMENT OUT IF RUNNING FOR THE FIRST TIME
 county_db = counties_init()
 county_vuln_db = county_vs_init()
+avg_db = rolling_avg_init()
+
 for county in county_db:
 
     cases_val = county_db[county][2]
@@ -68,13 +72,22 @@ for county in county_db:
     except KeyError:
         vuln_val = 'Unknown'
 
+    try:
+        avg_c = avg_db[county][0]
+        avg_d = avg_db[county][1]
+    except KeyError:
+        avg_c = 'Unknown'
+        avg_d = 'Unknown'
+
     County(county_name=county_db[county][0], \
            state=county_db[county][1], \
            county_and_state=county, \
            cases=cases_val, \
            deaths=deaths_val, \
            fips=county_db[county][4],\
-           vuln_score=vuln_val\
+           vuln_score=vuln_val,\
+           avg_cases=avg_c, \
+           avg_deaths=avg_d\
     ).save()
 
 class UserProfile(models.Model):

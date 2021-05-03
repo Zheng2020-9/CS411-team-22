@@ -46,6 +46,19 @@ def counties_init():
     counties_dict.pop('countystate', None)  # to remove header
     return counties_dict
 
+def rolling_avg_init():
+    db = csv_import('https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-recent.csv')
+    yesterday = (date.today() - timedelta(days=1)).strftime('%Y-%m-%d')
+    rolling_dict = {}
+
+    for row in db:
+        if row[0] != str(yesterday):
+            continue
+        state_county = row[2] + row[3]
+        rolling_dict[state_county] = [row[5]] + [row[8]]
+    
+    return rolling_dict
+
 def county_vs_init():
     yesterday = date.today() - timedelta(days=1)
     url = 'https://raw.githubusercontent.com/COVID19PVI/data/master/Model11.2.1/Model_11.2.1_' + yesterday.strftime('%Y%m%d') + '_results.csv'
