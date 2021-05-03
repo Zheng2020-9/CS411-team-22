@@ -84,16 +84,17 @@ def get_user_from_token(django_auth_token):
     #print("In_User11111111111111111111111")
     Username = dectry(django_auth_token)
     #print("In_User22222222222222222222222")
-    user = User.objects.get(username=Username)
-    #print("In_User33333333333333333333333")
-    if user != None:
-        return user
-    else:
+    
+    try:
+        user = User.objects.get(username=Username)
+    except User.DoesNotExist:
         pwd = enctry(Username)
         #print("In_User33333333333333333333333")
         User.objects.create_user(username=Username,password=pwd)
         #print("creat user12314114141412")
         user = User.objects.get(Username)
         return user
+    #print("In_User33333333333333333333333")
+        
     
     #return User.objects.get(id=AccessToken.objects.get(token=django_auth_token['access_token']).user_id)
