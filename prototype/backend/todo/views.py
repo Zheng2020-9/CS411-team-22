@@ -167,13 +167,23 @@ def user_operate(request):
         user = User.objects.get(Userid)
     except User.DoesNotExist:
         HttpResponse('Access Denied')
+    
+    user_profile = get_object_or_404(UserProfile, user=user)
+    
     if command == 'addBM':
         Bookmark = request.data['bookmark']
+        user_profile.add_bookmark(Bookmark)
     elif command == 'deleteBM':
         Bookmark = request.data['bookmark']
+        user_profile.delete_bookmark(Bookmark)
+    elif command == 'getBM':
+        bookmarks = user_profile.get_bookmarks()
+        Response(
+        {'BM': bookmarks}
+        )
     else:
         HttpResponse('command error')
     return Response(
-        {'BM': 'bookmark'}
+        {'result': 'success'}
         )
     
