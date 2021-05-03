@@ -171,10 +171,10 @@ def user_operate(request):
     user_profile = get_object_or_404(UserProfile, user=user)
     
     if command == 'addBM':
-        Bookmark = request.data['bookmark']
+        Bookmark = request.data['BM']
         user_profile.add_bookmark(Bookmark)
     elif command == 'deleteBM':
-        Bookmark = request.data['bookmark']
+        Bookmark = request.data['BM']
         user_profile.delete_bookmark(Bookmark)
     elif command == 'getBM':
         bookmarks = user_profile.get_bookmarks()
