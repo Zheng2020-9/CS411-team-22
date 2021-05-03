@@ -78,7 +78,7 @@ const MapChart = ({ setTooltipContent }) => {
 	}, []);
 
 	const colorScale = scaleQuantile()
-		.domain(data.map(d => d.cases))
+		.domain(data.map(d => d.vuln_score))
 		.range([
 			"#ffedea",
 			"#ffcec5",
@@ -102,14 +102,14 @@ const MapChart = ({ setTooltipContent }) => {
 							<Geography
 								key={geo.rsmKey}
 								geography={geo}
-								fill={cur ? colorScale(cur.cases) : "#EEE"}
+								fill={cur ? colorScale(cur.vuln_score) : "#EEE"}
 								//tooltip hover functions
 								onMouseEnter={() => {
 									// const [data, setData] = useState([]);
 									// const { NAME, POP_EST } = geo.properties;
 									//now the map has state and cases info 
 									if(cur != null)
-									setTooltipContent(`${cur.name}, ${cur.state}  - Cases: ${(cur.cases)}`);
+									setTooltipContent(`${cur.name}, ${cur.state}  - Vulnerability Score: ${cur.vuln_score} - Cumulative Cases: ${(cur.cases)}`);
 								  }}
 								onMouseLeave={() => {
 									setTooltipContent("");

@@ -177,16 +177,17 @@ def user_operate(request):
         HttpResponse('Access Denied')
     
     #user_profile = get_object_or_404(UserProfile, user=User)
-    
+    user_profile = UserProfile(user=user)
+
     if command == 'addBM':
         Bookmark = request.data['BM']
-        user.userprofile.add_bookmark(Bookmark)
+        user_profile.add_bookmark(Bookmark)
     elif command == 'deleteBM':
         Bookmark = request.data['BM']
-        user.userprofile.delete_bookmark(Bookmark)
+        user_profile.delete_bookmark(Bookmark)
     elif command == 'getBM':
-        bookmarks = user.userprofile.get_bookmarks()
-        Response(
+        bookmarks = "retbookmark"#user_profile.get_bookmarks()
+        return Response(
         {'BM': bookmarks}
         )
     else:
