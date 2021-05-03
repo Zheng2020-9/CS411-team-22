@@ -140,7 +140,7 @@ def profile_update(request):
     return render(request, 'account/profile_update.html', {'form': form, 'user': user})
 
 @api_view(['POST'])
-
+@permission_classes([])
 def github_authenticate(request):
     github_token, Username, Userid = generate_github_access_token(
         github_client_id="0e04fc00c07db82338b0",
