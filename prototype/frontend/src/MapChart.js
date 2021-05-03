@@ -13,24 +13,17 @@ const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
 const MapChart = ({ setTooltipContent }) => {
 	const [data, setData] = useState([]);
 
+	
 	useEffect(() => {
 		//CURRENTLY IMPORTING DIRECTLY, UPDATE TO USE DB
-		csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv").then(counties => {
-			console.log(counties)
-			for (var i in counties) {
-				counties[i].id = counties[i].fips
-				counties[i].name = counties[i].county
-				counties[i].state = counties[i].state
-				counties[i].case = counties[i].cases
-				counties[i].death = counties[i].deaths
-				counties[i].c_case = counties[i].confirmed_cases
-				counties[i].c_death = counties[i].confirmed_deaths
-				counties[i].p_case = counties[i].probable_cases
-				counties[i].p_death = counties[i].probable_deaths
-				counties[i].date = counties[i].date
-			}
-			setData(counties);
-		});
+		//csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv").then(counties => {
+			//console.log(counties)
+			//for (var i in counties) {
+			//	counties[i].id = counties[i].fips
+			//	counties[i].name = counties[i].county
+			//}
+			//setData(counties);
+		//});
 
 		const source = axios.CancelToken.source();
 
@@ -46,11 +39,11 @@ const MapChart = ({ setTooltipContent }) => {
 					var values = Object.values(reply)
 
 					for (var i in values) {
-						values[i].name = values[i].county_name + " County";
-						values[i].id = i;
+						values[i].name = values[i].county_name;
+						values[i].id = values[i].fips;
 					}
-					//console.log(values)
-					//setData(values)
+					console.log(values)
+					setData(values)
 				})
 			} catch (error) {
 				if (axios.isCancel(error)) {
@@ -115,7 +108,7 @@ const MapChart = ({ setTooltipContent }) => {
 									// const [data, setData] = useState([]);
 									// const { NAME, POP_EST } = geo.properties;
 									//now the map has state and cases info 
-									setTooltipContent(`${cur.name}, ${cur.state}  - Cases: ${(cur.case)}`);
+									setTooltipContent(`${cur.name}, ${cur.state}  - Cases: ${(cur.cases)}`);
 								  }}
 								onMouseLeave={() => {
 									setTooltipContent("");
@@ -123,7 +116,7 @@ const MapChart = ({ setTooltipContent }) => {
 								  //css for hover over the map
 								  style={{
 									hover: {
-									  fill: "#0000FF",
+									  fill: "#36C9C6",
 									  outline: "none"
 									}
 								  }}
