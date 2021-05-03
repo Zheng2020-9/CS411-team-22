@@ -208,7 +208,7 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 
-
+AUTH_PROFILE_MODULE = 'todo.UserProfile'
 
 
 
