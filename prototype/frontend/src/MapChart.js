@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ZoomableGroup, ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
+import { ZoomableGroup, ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { scaleQuantile } from "d3-scale";
 import { json } from "d3-fetch";
 import { csv } from "d3-fetch";
@@ -12,7 +12,7 @@ const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
 
 const MapChart = ({ setTooltipContent }) => {
 	const [data, setData] = useState([]);
-	
+
 	
 	useEffect(() => {
 		//CURRENTLY IMPORTING DIRECTLY, UPDATE TO USE DB
@@ -78,7 +78,7 @@ const MapChart = ({ setTooltipContent }) => {
 	}, []);
 
 	const colorScale = scaleQuantile()
-		.domain(data.map(d => d.cases))
+		.domain(data.map(d => d.vuln_score))
 		.range([
 			"#ffedea",
 			"#ffcec5",
@@ -90,16 +90,7 @@ const MapChart = ({ setTooltipContent }) => {
 			"#9a311f",
 			"#782618"
 		]);
-		const handleClick = (geo) => () => {
-			
-			const cur = data.find(s => s.id === geo.id);
-			
-			var county= cur.name;
-			var state= cur.state;
-			console.log(county, state);
-		
-			
-		  };
+
 	return (
 		<ComposableMap data-tip="" projection="geoAlbersUsa">
 			<ZoomableGroup>
@@ -111,26 +102,18 @@ const MapChart = ({ setTooltipContent }) => {
 							<Geography
 								key={geo.rsmKey}
 								geography={geo}
-								fill={cur ? colorScale(cur.cases) : "#EEE"}
-								tooltip hover functions
+								fill={cur ? colorScale(cur.vuln_score) : "#EEE"}
+								//tooltip hover functions
 								onMouseEnter={() => {
-		
+									// const [data, setData] = useState([]);
+									// const { NAME, POP_EST } = geo.properties;
 									//now the map has state and cases info 
-									if(cur != null){
-									setTooltipContent(`${cur.name}, ${cur.state}  - Cases: ${(cur.cases)}`);
-								
-		
-									localStorage.setItem('county',cur.name);}
-									
-
+									if(cur != null)
+									setTooltipContent(`${cur.name}, ${cur.state}  - Vulnerability Score: ${cur.vuln_score} - Cumulative Cases: ${(cur.cases)}`);
 								  }}
 								onMouseLeave={() => {
 									setTooltipContent("");
 								  }}
-								onClick={handleClick(geo)}
-
-
-								
 								  //css for hover over the map
 								  style={{
 									hover: {
