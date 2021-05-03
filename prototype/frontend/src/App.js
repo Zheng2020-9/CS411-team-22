@@ -7,10 +7,28 @@ import ReactDOM from 'react-dom';
 import axios from "axios";
 import ReactTooltip from "react-tooltip";
 import React, { useState, useEffect } from "react";
+import BookmarkSidebar from './BookmarkSidebar';
+
+
+function onClick(e, item) {
+  console.log(JSON.stringify(item, null, 2));
+}
+
+const items = [
+  { name: 'home', label: 'Home', onClick },
+  { name: 'home', label: 'About' },
+  {
+    name: 'bookmarks',
+    label: 'Bookmarks',
+    items: [
+      { name: 'a', label: 'County A', onClick },
+      { name: 'b', label: 'County B', onClick },
+    ],
+  },
+]
 
 
 function App() {
-
 
 
 
@@ -21,6 +39,7 @@ function App() {
 	return (
 		<div className='container'>
 			<div className='row center'>
+				<BookmarkSidebar items={items}/>
 				<h1>Covid Dashboard App</h1>
 				<div className='row center'>
 					<InfoForm />
@@ -31,6 +50,10 @@ function App() {
 					
 					<MapChart setTooltipContent={setData} />
      				<ReactTooltip>{data}</ReactTooltip>
+					
+
+					
+					
 				</div>
 			</div>
 		</div>
