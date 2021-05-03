@@ -35,12 +35,13 @@ urlpatterns = [
    # re_path(r'^accounts/', include('allauth.urls')),
    #URL for account
     path('accounts/', include('allauth.urls')),
-    path('accounts/', include('todo.urls')),
-    url(r"^githubverify/$", views.github_authenticate, name='github-authenticate'),
+
+    
 
     url(r'^auth/', include('rest_framework_social_oauth2.urls')),
     url(r'^api-auth/', include('rest_framework.urls')),#change
-
+    url(r"^", include("todo.urls")),
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 
     
     

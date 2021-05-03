@@ -69,7 +69,10 @@ INSTALLED_APPS = [
     
     
     'oauth2_provider',
-    
+
+    'drf_social_oauth2',
+
+    'rest_framework.authtoken',
     
     
     
@@ -150,6 +153,33 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework_social_oauth2.authentication.SocialAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',  # for Github authentication
+    #'social_core.backends.facebook.FacebookOAuth2',  # for Facebook authentication
+    'rest_framework_social_oauth2.backends.DjangoOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
+
+
+
+
+
 
 
 # Internationalization
