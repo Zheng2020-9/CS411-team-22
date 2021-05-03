@@ -108,6 +108,7 @@ const MapChart = ({ setTooltipContent }) => {
 									// const [data, setData] = useState([]);
 									// const { NAME, POP_EST } = geo.properties;
 									//now the map has state and cases info 
+									if(cur != null)
 									setTooltipContent(`${cur.name}, ${cur.state}  - Cases: ${(cur.cases)}`);
 								  }}
 								onMouseLeave={() => {
