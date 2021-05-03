@@ -157,4 +157,23 @@ def github_authenticate(request):
          'user': Username},#UserSerializer(user).data
          status=status.HTTP_201_CREATED
     )
+
+def user_operate(request):
+    token = request.data['token']
+    command = request.data['command']
+    Userid = dectry(token)
+    
+    try:
+        user = User.objects.get(Userid)
+    except User.DoesNotExist:
+        HttpResponse('Access Denied')
+    if command == 'addBM':
+        Bookmark = request.data['bookmark']
+    elif command == 'deleteBM':
+        Bookmark = request.data['bookmark']
+    else:
+        HttpResponse('command error')
+    return Response(
+        {'BM': 'bookmark'}
+        )
     
