@@ -110,6 +110,26 @@ class UserProfile(models.Model):
         self.bookmarks = json.dumps(myList)
         self.save()
 
+    def add_bookmark(self, county):
+        jsonDec = json.decoder.JSONDecoder()
+        bookmark_list = jsonDec.decode(self.bookmarks)
+        
+        if county not in bookmark_list:
+            bookmark_list.append(county)
+
+        self.bookmarks = json.dumps(bookmark_list)
+        self.save()
+
+    def delete_bookmark(self, county):
+        jsonDec = json.decoder.JSONDecoder()
+        bookmark_list = jsonDec.decode(self.bookmarks)
+        
+        if county in bookmark_list:
+            bookmark_list.remove(county)
+
+        self.bookmarks = json.dumps(bookmark_list)
+        self.save()
+
     def get_bookmarks(self):
         jsonDec = json.decoder.JSONDecoder()
         return jsonDec.decode(self.bookmarks)
