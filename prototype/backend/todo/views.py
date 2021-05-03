@@ -169,8 +169,6 @@ def user_operate(request):
     Userid = dectry(token)
     print("DecryToken: " + token);
 
-    
-    
     try:
   
         user = User.objects.get(username=Userid)
@@ -178,17 +176,16 @@ def user_operate(request):
     except User.DoesNotExist:
         HttpResponse('Access Denied')
     
-    user_profile = get_object_or_404(UserProfile, user=User)
-    print("User Profile: " + user_profile);
+    #user_profile = get_object_or_404(UserProfile, user=User)
     
     if command == 'addBM':
         Bookmark = request.data['BM']
-        user_profile.add_bookmark(Bookmark)
+        user.userprofile.add_bookmark(Bookmark)
     elif command == 'deleteBM':
         Bookmark = request.data['BM']
-        user_profile.delete_bookmark(Bookmark)
+        user.userprofile.delete_bookmark(Bookmark)
     elif command == 'getBM':
-        bookmarks = user_profile.get_bookmarks()
+        bookmarks = user.userprofile.get_bookmarks()
         Response(
         {'BM': bookmarks}
         )
