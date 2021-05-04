@@ -23,6 +23,7 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
     if (Array.isArray(items)) {
       toggleCollapse();
     }
+	
     if (onClickProp != undefined) {
 
       onClickProp(e, item);

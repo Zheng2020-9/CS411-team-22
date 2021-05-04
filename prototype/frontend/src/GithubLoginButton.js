@@ -3,13 +3,13 @@ import GitHubLogin from "react-github-login";
 import axios from "axios";
 
 
-const GithubLoginButton = props => {
+const GithubLoginButton = ({bookmarkUpdater}) => {
   const onSuccess = response => {
     console.log(response);
 	alert(JSON.stringify(response));
     //sendGithubCode(response);
 	testSendGithubAuthCode(response);
-	updateBookmarks();
+	bookmarkUpdater();
 
   };
   const onFailure = response => console.error(response);
@@ -60,19 +60,7 @@ const sentGithubCodeFailure = err => ({
   err
 });
 
-const updateBookmarks = async () =>{
-	console.log("Updating bookmarks");
-	const params = {token: localStorage.getItem('token'), command: "getBM"};
-		console.log(JSON.stringify(params));
 
-	try{
-			let response = await axios.post('/useroperate/',params);
-			console.log(response.data);
-
-	}catch(err){
-	
-	}
-}
 
 const testSendGithubAuthCode = async (code) =>{
 	

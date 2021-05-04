@@ -12,25 +12,9 @@ const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
 
 const MapChart = ({ setTooltipContent }) => {
 	const [data, setData] = useState([]);
+	const source = axios.CancelToken.source();
 
-	
-	useEffect(() => {
-		//CURRENTLY IMPORTING DIRECTLY, UPDATE TO USE DB
-		//csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv").then(counties => {
-			//console.log(counties)
-			//for (var i in counties) {
-			//	counties[i].id = counties[i].fips
-			//	counties[i].name = counties[i].county
-			//}
-			//setData(counties);
-		//});
-
-		const source = axios.CancelToken.source();
-
-		//WE WILL USE THIS LATER WHEN WE IMPORT FROM DB
-
-		//asyn and await allow for standard cleanup (react gets fussy when you do async stuff on components)
-		const fetchData = async () => {
+	const fetchData = async () => {
 			try {
 				const response = await axios.get("/api/Counties", {
 					cancelToken: source.token
@@ -43,7 +27,7 @@ const MapChart = ({ setTooltipContent }) => {
 						values[i].id = values[i].fips;
 					}
 					console.log(values)
-					setData(values)
+					setData( values);
 				})
 			} catch (error) {
 				if (axios.isCancel(error)) {
@@ -54,6 +38,22 @@ const MapChart = ({ setTooltipContent }) => {
 			}
 		};
 
+	useEffect(() => {
+		//CURRENTLY IMPORTING DIRECTLY, UPDATE TO USE DB
+		//csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv").then(counties => {
+			//console.log(counties)
+			//for (var i in counties) {
+			//	counties[i].id = counties[i].fips
+			//	counties[i].name = counties[i].county
+			//}
+			//setData(counties);
+		//});
+
+
+		//WE WILL USE THIS LATER WHEN WE IMPORT FROM DB
+
+		//asyn and await allow for standard cleanup (react gets fussy when you do async stuff on components)
+		
 		fetchData();
 
 		return () => {
