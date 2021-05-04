@@ -9,12 +9,14 @@ import ReactTooltip from "react-tooltip";
 import React, { useState, useEffect } from "react";
 import BookmarkSidebar from './BookmarkSidebar';
 
+//Default subitems array for sidebar, when receiving 404 from backend.
 var subItems = [
       { name: 'a', label: 'County A', onClick },
       { name: 'b', label: 'County B', onClick },
     ];
 
 
+//Clickhandler for sidebar buttons
 async function onClick(e, item) {
 	const source = axios.CancelToken.source();
 
@@ -32,16 +34,7 @@ async function onClick(e, item) {
   }
 }
 
-//var items = [
- // { name: 'home', label: 'Home', onClick },
- // { name: 'home', label: 'About' },
- // {
- //   name: 'bookmarks',
- //   label: 'Bookmarks',
- //   subItems,
- // },
-//]
-
+//API request to add a bookmark
 function addBookmark() {
 	var county = localStorage.getItem('county');
     var county_name = localStorage.getItem('county_name');
@@ -58,17 +51,7 @@ function addBookmark() {
 
 }
 
-
-
-
-
-
-
 function App() {
-
-
-
-
 
 	const [data, setData] = useState([]);
 	const [items, setItems] = useState([
@@ -85,7 +68,7 @@ function App() {
 ]);
 
 
-
+//County names are fetched from backend
 const updateNames = async (arr) =>{
 	var county_names = [];
 			const source = axios.CancelToken.source();
@@ -103,6 +86,7 @@ const updateNames = async (arr) =>{
 	return county_names;
 }
 	
+//Bookmarks are fetched from backend
 const updateBookmarks = async () =>{
 	console.log("Updating bookmarks");
 		const source = axios.CancelToken.source();
@@ -135,11 +119,7 @@ const updateBookmarks = async () =>{
     items: items1,
   },
 ]);
-
-
-	}catch(err){
-	
-	}
+	}catch(err){}
 }
 
 

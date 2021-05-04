@@ -8,7 +8,6 @@ import json
 from django.contrib.auth.models import User
 
 
-# Create your models here.
 class County(models.Model):
     county_name = models.CharField(max_length=50, help_text='Name of a US County')
     state = models.CharField(max_length=40, help_text='Name of the US State that contains it')

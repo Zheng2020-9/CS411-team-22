@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from "axios";
 
+//InfoForm was the main component for our prototype app.
 
 class InfoForm extends React.Component {
   constructor(props) {

@@ -9,11 +9,14 @@ import axios from "axios";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
 
+//React Simple Map's library, from their given example:  https://www.react-simple-maps.io/examples/usa-counties-choropleth-quantize/
+//Simple component to display a map of the U.S. with data fetched from the backend server.
 
 const MapChart = ({ setTooltipContent }) => {
 	const [data, setData] = useState([]);
 	const source = axios.CancelToken.source();
 
+	//Fetch data from public backend API
 	const fetchData = async () => {
 			try {
 				const response = await axios.get("/api/Counties", {
@@ -22,6 +25,7 @@ const MapChart = ({ setTooltipContent }) => {
 					var reply = res.data;
 					var values = Object.values(reply)
 
+					//These fields are required for the mapping library.
 					for (var i in values) {
 						values[i].name = values[i].county_name;
 						values[i].id = values[i].fips;
@@ -39,44 +43,16 @@ const MapChart = ({ setTooltipContent }) => {
 		};
 
 	useEffect(() => {
-		//CURRENTLY IMPORTING DIRECTLY, UPDATE TO USE DB
-		//csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv").then(counties => {
-			//console.log(counties)
-			//for (var i in counties) {
-			//	counties[i].id = counties[i].fips
-			//	counties[i].name = counties[i].county
-			//}
-			//setData(counties);
-		//});
 
-
-		//WE WILL USE THIS LATER WHEN WE IMPORT FROM DB
-
-		//asyn and await allow for standard cleanup (react gets fussy when you do async stuff on components)
-		
 		fetchData();
 
 		return () => {
 			source.cancel();
 		};
-		//axios.get("/api/Counties/").then((res) => {
-		//	var reply = res.data;
-		//	var values = Object.values(reply)
-		//	var counties = []
 
-		//	for(var i in reply)
-		//		counties.push(values[i]);
-		//console.log(reply)
-		//	console.log(counties)
-		//	setData(counties)
-		//json(reply).then(counties => {
-		//	console.log(counties)
-		//	setData(counties);//
-		//});
-
-		//}).catch();
 	}, []);
 	
+	//Clickhandler for setting bookmarks.
 	const handleClick = (geo) => () => {
 
 			const cur = data.find(s => s.id === geo.id);
@@ -91,6 +67,7 @@ const MapChart = ({ setTooltipContent }) => {
 
 		  };
 
+	//Scale the map colors to fit the data
 	const colorScale = scaleQuantile()
 		.domain(data.map(d => d.vuln_score))
 		.range([

@@ -1,10 +1,5 @@
 import time
 
-
-
-
-
-
 def change(x, y):
     sto = ''
     for chara in range(len(x)):
@@ -13,8 +8,6 @@ def change(x, y):
             position = position - len(x)
         sto += x[position]
     return sto
-    
-
 
 def enctry(s):
     k = '&^*ghjsdgsewtqgfdhsdsdagsaGF43^&*%87jfhgdsafasg'

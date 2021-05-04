@@ -5,10 +5,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
-import githubAuthReducer from './githubAuthReducer';
 
 
-let store = createStore(githubAuthReducer);
 
 
 ReactDOM.render(
