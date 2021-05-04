@@ -42,7 +42,6 @@ class Userdata(models.Model):
     pwd = models.CharField(max_length = 20)
 
 # update state db
-# COMMENT OUT IF RUNNING FOR THE FIRST TIME
 state_dict = states_init()
 for state in state_dict:
      State(name=state, \
@@ -52,7 +51,6 @@ for state in state_dict:
      ).save()
 
 # update counties db
-# COMMENT OUT IF RUNNING FOR THE FIRST TIME
 county_db = counties_init()
 county_vuln_db = county_vs_init()
 avg_db = rolling_avg_init()
@@ -61,16 +59,20 @@ for county in county_db:
 
     cases_val = county_db[county][2]
     deaths_val = county_db[county][3]
+
+    # Compute case/death ratio if values are known
     try:
         case_death_ratio = float(deaths_val) / float(cases_val)
     except:
         case_death_ratio = 0.0
 
+    # Add weighted case/death ratio to vulnerability score
     try:
         vuln_val = str(round(float(county_vuln_db[county]) + (0.07 * case_death_ratio), 4))
     except KeyError:
         vuln_val = 'Unknown'
 
+    # populate rolling average fields
     try:
         avg_c = avg_db[county][0]
         avg_d = avg_db[county][1]
@@ -105,6 +107,7 @@ class UserProfile(models.Model):
     def __str__(self):
         return "{}'s profile".format(self.user.__str__())
 
+    # function to add a county to bookmarks
     def add_bookmark(self, county):
         bookmark_list = self.bookmarks.split(',')
         
@@ -114,6 +117,7 @@ class UserProfile(models.Model):
         self.bookmarks = joined_string = ",".join(bookmark_list)
         self.save()
 
+    # function to remove a bookmarked county
     def delete_bookmark(self, county):
         bookmark_list = self.bookmarks.split(',')
         
@@ -123,5 +127,6 @@ class UserProfile(models.Model):
         self.bookmarks = joined_string = ",".join(bookmark_list)
         self.save()
 
+    # return user's bookmarked counties
     def get_bookmarks(self):
         return self.bookmarks

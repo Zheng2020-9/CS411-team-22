@@ -14,7 +14,7 @@ def csv_import(url):
     # key: state's name as string
     # value: a list containing the state's fips, cases, and deaths (as strings)
 def states_init():
-    db = csv_import('https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-states.csv')
+    db = csv_import('https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-states.csv')  # NY Times US States Covid API
     state_dict = {}
 
     for row in db:
@@ -28,7 +28,7 @@ def states_init():
     # key: county name + state name
     # value: a list containing the state's fips, cases, and deaths (as strings)
 def counties_init():
-    db = csv_import('https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv')
+    db = csv_import('https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv') # NY Times US Counties Covid API
     counties_dict = {}
 
     for row in db:
@@ -46,8 +46,10 @@ def counties_init():
     counties_dict.pop('countystate', None)  # to remove header
     return counties_dict
 
+# rolling_avg_init:
+# creates a dictionary with counties as keys and rolling case/death weekly averages as values
 def rolling_avg_init():
-    db = csv_import('https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-recent.csv')
+    db = csv_import('https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-recent.csv') # NY Times US Counties Covid API
     yesterday = (date.today() - timedelta(days=1)).strftime('%Y-%m-%d')
     rolling_dict = {}
 
@@ -59,9 +61,11 @@ def rolling_avg_init():
     
     return rolling_dict
 
+# rolling_avg_init:
+# creates a dictionary with counties as keys and cdc's designated pvi as values
 def county_vs_init():
     yesterday = date.today() - timedelta(days=1)
-    url = 'https://raw.githubusercontent.com/COVID19PVI/data/master/Model11.2.1/Model_11.2.1_' + yesterday.strftime('%Y%m%d') + '_results.csv'
+    url = 'https://raw.githubusercontent.com/COVID19PVI/data/master/Model11.2.1/Model_11.2.1_' + yesterday.strftime('%Y%m%d') + '_results.csv' # CDC's Covid Vulnerability API
     db = csv_import(url)
     county_score_dict = {}
 
@@ -73,6 +77,7 @@ def county_vs_init():
         splitup = state_county.split(", ")
         name = splitup[1] + splitup[0]
 
+        # Recomputing Vulnerability Value
         index_val = str( \
                     round (float(row[5]) * 0.2  + \
                     float(row[6])  * 0.03 + \
@@ -88,8 +93,21 @@ def county_vs_init():
                     float(row[16]) * 0.04 , 4)  \
                     )
 
+        # Redistributed Weights:
+        # 20% Transmissible Cases
+        # 3%  Disease Spread
+        # 7%  Population Mobility
+        # 8%  Population Density
+        # 8%  Social Distancing
+        # 7%  Testing Frequency
+        # 4%  Demographics
+        # 8%  Air Pollution
+        # 8%  Age Distribution
+        # 8%  Co-Morbidities
+        # 8%  Health Disparities
+        # 4%  Hospital Beds
+        # 7%  Historical Case-Death Ratio (Added in models.py)
+
         county_score_dict[name] = index_val
-        # iden = name + " has a val of: " + index_val
-        # print(iden)
 
     return county_score_dict
