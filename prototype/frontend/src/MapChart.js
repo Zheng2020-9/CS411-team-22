@@ -76,6 +76,20 @@ const MapChart = ({ setTooltipContent }) => {
 
 		//}).catch();
 	}, []);
+	
+	const handleClick = (geo) => () => {
+
+			const cur = data.find(s => s.id === geo.id);
+
+			var county= cur.name;
+			var state= cur.state;
+			console.log(county, state);
+			localStorage.setItem('county',cur.id);
+			localStorage.setItem('county_name',cur.name);
+
+
+
+		  };
 
 	const colorScale = scaleQuantile()
 		.domain(data.map(d => d.vuln_score))
@@ -109,7 +123,7 @@ const MapChart = ({ setTooltipContent }) => {
 									// const { NAME, POP_EST } = geo.properties;
 									//now the map has state and cases info 
 									if(cur != null)
-									setTooltipContent(`${cur.name}, ${cur.state}  - Vulnerability Score: ${cur.vuln_score} - Cumulative Cases: ${(cur.cases)}`);
+									setTooltipContent(`${cur.name}, ${cur.state}  - Vulnerability Score: ${cur.vuln_score} - Weekly Cases: ${(cur.avg_cases)}`);
 								  }}
 								onMouseLeave={() => {
 									setTooltipContent("");
@@ -121,6 +135,8 @@ const MapChart = ({ setTooltipContent }) => {
 									  outline: "none"
 									}
 								  }}
+								onClick={handleClick(geo)}
+
 							/>
 						);
 					})

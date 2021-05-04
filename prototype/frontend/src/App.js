@@ -27,6 +27,22 @@ function onClick(e, item) {
   },
 ]
 
+function addBookmark() {
+	var county = localStorage.getItem('county');
+    var county_name = localStorage.getItem('county_name');
+	if(county != null){
+		alert("Added " + county_name + " to bookmarks");
+		const params = {token: localStorage.getItem('token'), command: "addBM", BM: county};
+		console.log(JSON.stringify(params));
+		try{
+			 axios.post('/useroperate/', params);
+		}catch(err){
+
+		}
+	}
+
+}
+
 
 
 
@@ -57,6 +73,10 @@ function App() {
 					<MapChart setTooltipContent={setData} />
      				<ReactTooltip>{data}</ReactTooltip>
 					
+					
+					 <button onClick={() => addBookmark()}>
+					 Bookmark Selected County
+     				 </button>
 
 					
 					
