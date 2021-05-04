@@ -19,7 +19,7 @@ def change(x, y):
 def enctry(s):
     k = '&^*ghjsdgsewtqgfdhsdsdagsaGF43^&*%87jfhgdsafasg'
     ticks = time.time()
-    k = change(k,ticks = time.time(int(((ticks - 10000) / 86400 ) % 30)))
+    k = change(k,(int(((ticks - 10000) / 86400 ) % 30)))
     
     
     encry_str = ""
@@ -37,7 +37,7 @@ def enctry(s):
 def dectry(p):
     k = '&^*ghjsdgsewtqgfdhsdsdagsaGF43^&*%87jfhgdsafasg'
     ticks = time.time()
-    k = change(k,ticks = time.time(int(((ticks - 10000) / 86400 ) % 30)))
+    k = change(k,int(((ticks - 10000) / 86400 ) % 30))
     dec_str = ""
     p = p.split("_")
     for i in range(len(p)):
