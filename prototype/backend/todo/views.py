@@ -34,16 +34,16 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 @permission_classes([])
 class CountyView(viewsets.ViewSet):
 
-    lookup_field = 'county_and_state'
+    lookup_field = 'fips'
     
     def list(self, request):
         queryset = County.objects.all()
         serializer = CountySerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def retrieve(self, request, county_and_state=None):
+    def retrieve(self, request, fips=None):
         queryset = County.objects.all()
-        county = get_object_or_404(queryset, county_and_state=county_and_state)
+        county = get_object_or_404(queryset, fips=fips)
         serializer = CountySerializer(county)
         return Response(serializer.data)  
 

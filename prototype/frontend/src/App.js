@@ -15,8 +15,21 @@ var subItems = [
     ];
 
 
-function onClick(e, item) {
+async function onClick(e, item) {
+	const source = axios.CancelToken.source();
+
   console.log(JSON.stringify(item, null, 2));
+  try{
+  const response = await axios.get("/api/Counties/" + item.name, {
+					cancelToken: source.token
+				}).then((res) => {
+					var reply = res.data;
+					var report = reply.county_name + " Covid Report | Weekly Cases: " + reply.avg_cases + ",Weekly Deaths: " + reply.avg_deaths;  
+					alert(report)
+				})
+  } catch(err){
+	  
+  }
 }
 
 //var items = [
@@ -73,10 +86,27 @@ function App() {
 
 
 
+const updateNames = async (arr) =>{
+	var county_names = [];
+			const source = axios.CancelToken.source();
 
+	for(const index in arr){
+				const response = await axios.get("/api/Counties/" + arr[index], {
+					cancelToken: source.token
+				}).then((res) => {
+					var reply = res.data;
+					console.log("LABEL REPLY: " + reply.data);
+					var report = reply.county_name + " Covid Report | Weekly Cases: " + reply.avg_cases + ",Weekly Deaths: " + reply.avg_deaths;  
+					county_names.push(reply.county_name);
+				})
+			}
+	return county_names;
+}
 	
 const updateBookmarks = async () =>{
 	console.log("Updating bookmarks");
+		const source = axios.CancelToken.source();
+
 	const params = {token: localStorage.getItem('token'), command: "getBM"};
 		console.log(JSON.stringify(params));
 
@@ -88,8 +118,11 @@ const updateBookmarks = async () =>{
 			var arr = bookmarks.split(",");
 			
 			var items1 = [];
+			
+			var county_names = await updateNames(arr);
+			
 			for(const index in arr){
-				items1.push( { name: arr[index], label: arr[index]})
+				items1.push( { name: arr[index], label: county_names[index], onClick})
 			}
 			console.log("Bookmarks: ");
 			console.log(items1);
@@ -116,7 +149,6 @@ const updateBookmarks = async () =>{
 				<BookmarkSidebar items={items}/>
 				<h1>Covid Dashboard App</h1>
 				<div className='row center'>
-					<InfoForm />
 					<script>
 
 					</script>
